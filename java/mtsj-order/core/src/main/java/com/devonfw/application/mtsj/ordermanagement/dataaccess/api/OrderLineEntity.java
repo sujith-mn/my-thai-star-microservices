@@ -1,17 +1,12 @@
 package com.devonfw.application.mtsj.ordermanagement.dataaccess.api;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import com.devonfw.application.mtsj.general.dataaccess.api.ApplicationPersistenceEntity;
 import com.devonfw.application.mtsj.ordermanagement.common.api.OrderLine;
 
@@ -28,7 +23,7 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
 
   private Long idDish;
 
-  private List<IngredientEntity> extras;
+  // private List<IngredientEntity> extras;
 
   private Integer amount;
 
@@ -52,25 +47,6 @@ public class OrderLineEntity extends ApplicationPersistenceEntity implements Ord
   public void setOrder(OrderEntity order) {
 
     this.order = order;
-  }
-
-  /**
-   * @return extras
-   */
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "OrderDishExtraIngredient", joinColumns = {
-  @javax.persistence.JoinColumn(name = "idOrderLine") }, inverseJoinColumns = @javax.persistence.JoinColumn(name = "idIngredient"))
-  public List<IngredientEntity> getExtras() {
-
-    return this.extras;
-  }
-
-  /**
-   * @param extras new value of {@link #getExtras}.
-   */
-  public void setExtras(List<IngredientEntity> extras) {
-
-    this.extras = extras;
   }
 
   /**

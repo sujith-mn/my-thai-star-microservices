@@ -11,7 +11,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.devonfw.application.mtsj.general.service.impl.config.BaseWebSecurityConfig;
 import com.devonfw.module.basic.common.api.config.SpringProfileConstants;
 
 /**

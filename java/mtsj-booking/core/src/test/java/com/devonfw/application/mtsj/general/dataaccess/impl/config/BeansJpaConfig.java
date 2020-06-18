@@ -4,11 +4,11 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
-import com.devonfw.application.mtsj.general.dataaccess.base.DatabaseMigrator;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.devonfw.application.mtsj.general.dataaccess.base.DatabaseMigrator;
 
 /**
  * Java configuration for JPA

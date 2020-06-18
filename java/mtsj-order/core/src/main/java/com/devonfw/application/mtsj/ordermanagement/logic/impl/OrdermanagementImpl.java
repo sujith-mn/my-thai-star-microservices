@@ -26,11 +26,9 @@ import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingCto;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingEto;
 import com.devonfw.application.mtsj.bookingmanagement.common.api.to.InvitedGuestEto;
 import com.devonfw.application.mtsj.bookingmanagement.logic.api.Bookingmanagement;
-import com.devonfw.application.mtsj.dishmanagement.common.api.Ingredient;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishCto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.IngredientEto;
-import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.IngredientEntity;
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 import com.devonfw.application.mtsj.general.common.impl.security.ApplicationAccessControlConfig;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
@@ -47,17 +45,10 @@ import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineCto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineEto;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderLineSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderSearchCriteriaTo;
-import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesCto;
-import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesEto;
-import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderedDishesSearchCriteriaTo;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderLineEntity;
-import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerDayEntity;
-import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.OrderedDishesPerMonthEntity;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderLineRepository;
 import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderRepository;
-import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderedDishesPerDayRepository;
-import com.devonfw.application.mtsj.ordermanagement.dataaccess.api.repo.OrderedDishesPerMonthRepository;
 import com.devonfw.application.mtsj.ordermanagement.logic.api.Ordermanagement;
 
 /**
@@ -83,12 +74,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
    */
   @Inject
   private OrderLineRepository orderLineDao;
-
-  @Inject
-  private OrderedDishesPerDayRepository orderedDishesPerDayDao;
-
-  @Inject
-  private OrderedDishesPerMonthRepository orderedDishesPerMonthDao;
 
   @Inject
   private Bookingmanagement bookingManagement;
@@ -168,6 +153,11 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
 
   }
 
+  private List<IngredientEto> getIngredients() {
+
+    return new ArrayList<IngredientEto>();
+  }
+
   @Override
   public Page<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
@@ -215,7 +205,8 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     for (OrderLineEntity orderLine : order.getOrderLines()) {
       OrderLineCto orderLineCto = new OrderLineCto();
       orderLineCto.setDish(getDish(orderLine));
-      orderLineCto.setExtras(getBeanMapper().mapList(orderLine.getExtras(), IngredientEto.class));
+
+      orderLineCto.setExtras(getIngredients());
       orderLineCto.setOrderLine(getBeanMapper().map(orderLine, OrderLineEto.class));
       orderLinesCto.add(orderLineCto);
     }
@@ -269,7 +260,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     List<OrderLineEntity> orderLineEntities = new ArrayList<>();
     for (OrderLineCto lineCto : linesCto) {
       OrderLineEntity orderLineEntity = getBeanMapper().map(lineCto, OrderLineEntity.class);
-      orderLineEntity.setExtras(getBeanMapper().mapList(lineCto.getExtras(), IngredientEntity.class));
+
       orderLineEntity.setDishId(lineCto.getOrderLine().getDishId());
       orderLineEntity.setAmount(lineCto.getOrderLine().getAmount());
       orderLineEntity.setComment(lineCto.getOrderLine().getComment());
@@ -320,7 +311,7 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     for (OrderLineEntity orderline : orderlines.getContent()) {
       OrderLineCto orderLineCto = new OrderLineCto();
       orderLineCto.setOrderLine(getBeanMapper().map(this.orderLineDao.find(orderline.getId()), OrderLineEto.class));
-      orderLineCto.setExtras(getBeanMapper().mapList(orderline.getExtras(), IngredientEto.class));
+      orderLineCto.setExtras(getIngredients());
       orderLinesCto.add(orderLineCto);
     }
 
@@ -359,16 +350,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   public OrderLineRepository getOrderLineDao() {
 
     return this.orderLineDao;
-  }
-
-  public OrderedDishesPerDayRepository getOrderedDishesPerDayDao() {
-
-    return this.orderedDishesPerDayDao;
-  }
-
-  public OrderedDishesPerMonthRepository getOrderedDishesPerMonthDao() {
-
-    return this.orderedDishesPerMonthDao;
   }
 
   private OrderEntity getValidatedOrder(String token, OrderEntity orderEntity) {
@@ -478,15 +459,11 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
       linePrice = dishCost;
       // dish selected extras
       sb.append(". Extras: ");
-      for (Ingredient extra : extras) {
-        for (Ingredient selectedExtra : orderLine.getExtras()) {
-          if (extra.getId().equals(selectedExtra.getId())) {
-            sb.append(extra.getName()).append(",");
-            linePrice = linePrice.add(extra.getPrice());
-            break;
-          }
-        }
-      }
+      /*
+       * for (Ingredient extra : extras) { for (Ingredient selectedExtra : orderLine.getExtras()) { if
+       * (extra.getId().equals(selectedExtra.getId())) { sb.append(extra.getName()).append(","); linePrice =
+       * linePrice.add(extra.getPrice()); break; } } }
+       */
 
       // dish cost
       sb.append(" ==>").append(". Dish cost: ").append(linePrice.toString());
@@ -532,48 +509,6 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     long now = Instant.now().toEpochMilli();
 
     return (now > cancellationLimit) ? false : true;
-  }
-
-  private DishEto getOrderedDish(OrderedDishesPerDayEntity orderedDishesPerDay) {
-
-    DishEto orderedDishesEto = new DishEto();
-    orderedDishesEto.setId(orderedDishesPerDay.getIdDish());
-    return orderedDishesEto;
-  }
-
-  private DishEto getOrderedDish(OrderedDishesPerMonthEntity orderedDishesPerDay) {
-
-    DishEto orderedDishesEto = new DishEto();
-    orderedDishesEto.setId(orderedDishesPerDay.getIdDish());
-    return orderedDishesEto;
-  }
-
-  @Override
-  public Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo criteria) {
-
-    List<OrderedDishesCto> orderedDishesCtos = new ArrayList<>();
-    if (criteria.getType() == OrderedDishesSearchCriteriaTo.Type.DAILY) {
-      Page<OrderedDishesPerDayEntity> orderedDishes = getOrderedDishesPerDayDao().findOrderedDishesPerDay(criteria);
-      for (OrderedDishesPerDayEntity orderedDishesPerDay : orderedDishes.getContent()) {
-        OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
-        orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerDay, OrderedDishesEto.class));
-        orderedDishesCto.setDish(getOrderedDish(orderedDishesPerDay));
-        orderedDishesCtos.add(orderedDishesCto);
-      }
-      Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
-      return new PageImpl<>(orderedDishesCtos, pagResultTo, orderedDishes.getTotalElements());
-    } else {
-      Page<OrderedDishesPerMonthEntity> orderedDishes = getOrderedDishesPerMonthDao()
-          .findOrderedDishesPerMonth(criteria);
-      for (OrderedDishesPerMonthEntity orderedDishesPerMonth : orderedDishes.getContent()) {
-        OrderedDishesCto orderedDishesCto = new OrderedDishesCto();
-        orderedDishesCto.setOrderedDishes(getBeanMapper().map(orderedDishesPerMonth, OrderedDishesEto.class));
-        orderedDishesCto.setDish(getOrderedDish(orderedDishesPerMonth));
-        orderedDishesCtos.add(orderedDishesCto);
-      }
-      Pageable pagResultTo = PageRequest.of(criteria.getPageable().getPageNumber(), orderedDishesCtos.size());
-      return new PageImpl<>(orderedDishesCtos, pagResultTo, orderedDishes.getTotalElements());
-    }
   }
 
 }

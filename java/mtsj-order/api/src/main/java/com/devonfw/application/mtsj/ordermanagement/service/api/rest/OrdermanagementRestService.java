@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.ordermanagement.service.api.rest;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -38,6 +40,10 @@ public interface OrdermanagementRestService {
   @GET
   @Path("/order/{id}/")
   public OrderCto getOrder(@PathParam("id") long id);
+
+  @GET
+  @Path("/orders/{bookingId}/")
+  public List<OrderCto> getOrdersByBooking(Long bookingId);
 
   /**
    * Delegates to {@link Ordermanagement#saveOrder}.

@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.ordermanagement.service.impl.rest;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -81,9 +83,15 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   }
 
   @Override
-  public Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo searchCriteriaTo){
+  public Page<OrderedDishesCto> findOrderedDishes(OrderedDishesSearchCriteriaTo searchCriteriaTo) {
 
-    return this.ordermanagement.findOrderedDishes(searchCriteriaTo);
+    return null;
+  }
+
+  @Override
+  public List<OrderCto> getOrdersByBooking(Long bookingId) {
+
+    return this.ordermanagement.findOrders(bookingId);
   }
 
 }

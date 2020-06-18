@@ -8,7 +8,7 @@
   <!-- <include resource="com/devonfw/logging/logback/appenders-file-all.xml" /> -->
   <include resource="com/devonfw/logging/logback/appender-console.xml" />
 
-  <root level="DEBUG">
+  <root level="TRACE">
   <!--
     <appender-ref ref="ERROR_APPENDER"/>
     <appender-ref ref="INFO_APPENDER"/>
