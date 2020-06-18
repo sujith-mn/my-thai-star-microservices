@@ -89,7 +89,7 @@ public class OrdermanagementRestServiceImpl implements OrdermanagementRestServic
   }
 
   @Override
-  public List<OrderCto> getOrdersByBooking(Long bookingId) {
+  public List<OrderCto> getOrdersByBooking(long bookingId) {
 
     return this.ordermanagement.findOrders(bookingId);
   }

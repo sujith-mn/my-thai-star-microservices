@@ -25,7 +25,7 @@ public interface Ordermanagement {
    * @return
    */
 
-  @RequestMapping(method = RequestMethod.GET, value = "/orders/{bookingId}", consumes = "application/json")
+  @RequestMapping(method = RequestMethod.GET, value = "/orders/{bookingId}", produces = "application/json", consumes = "application/json")
   List<OrderCto> findOrders(@PathVariable("bookingId") Long bookingId);
 
   /**

@@ -41,9 +41,13 @@ public interface OrdermanagementRestService {
   @Path("/order/{id}/")
   public OrderCto getOrder(@PathParam("id") long id);
 
+  /**
+   * @param bookingId - booking id
+   * @return list
+   */
   @GET
   @Path("/orders/{bookingId}/")
-  public List<OrderCto> getOrdersByBooking(Long bookingId);
+  public List<OrderCto> getOrdersByBooking(@PathParam("bookingId") long bookingId);
 
   /**
    * Delegates to {@link Ordermanagement#saveOrder}.
