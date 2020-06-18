@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.devonfw.application.mtsj.general.common.impl.config.FeignConfig;
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderCto;
 
-@FeignClient(value = "order", url = "http://localhost:8085/mythaistar/services/rest/ordermanagement/v1/", configuration = FeignConfig.class)
+@FeignClient(value = "order", url = "${feignclient.order.url}", configuration = FeignConfig.class)
 public interface Ordermanagement {
 
   /**
    * @param id
    * @return
    */
-  @RequestMapping(method = RequestMethod.DELETE, value = "/order/{id}/")
-  boolean deleteOrder(Long id);
+  @RequestMapping(method = RequestMethod.DELETE, value = "/order/{id}/", produces = "application/json", consumes = "application/json")
+  boolean deleteOrder(@PathVariable("id") Long id);
 
   /**
    * @param bookingId
@@ -33,14 +33,14 @@ public interface Ordermanagement {
    * @return
    */
   // TODO not working
-  @RequestMapping(method = RequestMethod.GET, value = "/order/{id}")
-  List<OrderCto> findOrdersByBookingToken(String bookingToken);
+  @RequestMapping(method = RequestMethod.GET, value = "/order/{id}", produces = "application/json", consumes = "application/json")
+  List<OrderCto> findOrdersByBookingToken(@PathVariable("id") String bookingToken);
 
   /**
    * @param id
    * @return
    */
-  @RequestMapping(method = RequestMethod.GET, value = "/order/{id}")
-  List<OrderCto> findOrdersByInvitedGuest(Long id);
+  @RequestMapping(method = RequestMethod.GET, value = "/order/{id}", produces = "application/json", consumes = "application/json")
+  List<OrderCto> findOrdersByInvitedGuest(@PathVariable("id") Long id);
 
 }
