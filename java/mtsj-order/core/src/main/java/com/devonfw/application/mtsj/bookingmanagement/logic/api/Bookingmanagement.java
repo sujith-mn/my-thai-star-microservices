@@ -1,5 +1,9 @@
 package com.devonfw.application.mtsj.bookingmanagement.logic.api;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +15,10 @@ import com.devonfw.application.mtsj.general.common.impl.config.FeignConfig;
 
 @FeignClient(value = "booking", url = "${feignclient.booking.url}", configuration = FeignConfig.class)
 public interface Bookingmanagement {
+
+  @GET
+  @Path("/booking/{id}/")
+  public BookingCto getBooking(@PathParam("id") long id);
 
   /**
    * @param token

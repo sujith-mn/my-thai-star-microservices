@@ -268,7 +268,9 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
 
     OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
-    String token ="GET_TOKEN_FROM_BOOKING"; //order.getBooking().getBookingToken();
+    BookingCto bookingCto = this.bookingManagement.getBooking(order.getOrder().getBookingId());
+    String token = bookingCto.getBooking().getBookingToken();
+    // //order.getBooking().getBookingToken();
     // initialize, validate orderEntity here if necessary
     orderEntity = getValidatedOrder(token, orderEntity);
     orderEntity.setOrderLines(orderLineEntities);
