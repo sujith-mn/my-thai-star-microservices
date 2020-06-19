@@ -107,11 +107,11 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     LOG.debug("Get Order with id {} from database.", id);
     OrderEntity entity = getOrderDao().find(id);
     OrderCto cto = new OrderCto();
-    cto.setBooking(getBooking(entity));
-    cto.setHost(getHost(entity));
+    // cto.setBooking(getBooking(entity));
+    // cto.setHost(getHost(entity));
     cto.setOrderLines(getBeanMapper().mapList(entity.getOrderLines(), OrderLineCto.class));
-    cto.setOrder(getBeanMapper().map(entity, OrderEto.class));
-    cto.setInvitedGuest(getInvitedGuest(entity));
+    // cto.setOrder(getBeanMapper().map(entity, OrderEto.class));
+    // cto.setInvitedGuest(getInvitedGuest(entity));
     return cto;
   }
 
@@ -196,9 +196,9 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
   private void processOrders(List<OrderCto> ctos, OrderEntity order) {
 
     OrderCto cto = new OrderCto();
-    cto.setBooking(getBooking(order));
-    cto.setHost(getHost(order));
-    cto.setInvitedGuest(getInvitedGuest(order));
+    // cto.setBooking(getBooking(order));
+    // cto.setHost(getHost(order));
+    // cto.setInvitedGuest(getInvitedGuest(order));
     cto.setOrder(getBeanMapper().map(order, OrderEto.class));
     cto.setOrderLines(getBeanMapper().mapList(order.getOrderLines(), OrderLineCto.class));
     List<OrderLineCto> orderLinesCto = new ArrayList<>();
@@ -268,9 +268,9 @@ public class OrdermanagementImpl extends AbstractComponentFacade implements Orde
     }
 
     OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
-    String token = order.getBooking().getBookingToken();
+    String token ="GET_TOKEN_FROM_BOOKING"; //order.getBooking().getBookingToken();
     // initialize, validate orderEntity here if necessary
-    orderEntity = getValidatedOrder(order.getBooking().getBookingToken(), orderEntity);
+    orderEntity = getValidatedOrder(token, orderEntity);
     orderEntity.setOrderLines(orderLineEntities);
     OrderEntity resultOrderEntity = getOrderDao().save(orderEntity);
     LOG.debug("Order with id '{}' has been created.", resultOrderEntity.getId());

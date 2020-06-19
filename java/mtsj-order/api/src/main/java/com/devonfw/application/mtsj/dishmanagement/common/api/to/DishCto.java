@@ -2,7 +2,6 @@ package com.devonfw.application.mtsj.dishmanagement.common.api.to;
 
 import java.util.List;
 
-import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageEto;
 import com.devonfw.module.basic.common.api.to.AbstractCto;
 
 /**
@@ -13,8 +12,6 @@ public class DishCto extends AbstractCto {
   private static final long serialVersionUID = 1L;
 
   private DishEto dish;
-
-  private ImageEto image;
 
   private List<IngredientEto> extras;
 
@@ -48,22 +45,6 @@ public class DishCto extends AbstractCto {
   public void setCategories(List<CategoryEto> categories) {
 
     this.categories = categories;
-  }
-
-  /**
-   * @return image
-   */
-  public ImageEto getImage() {
-
-    return this.image;
-  }
-
-  /**
-   * @param image new value of {@link #getimage}.
-   */
-  public void setImage(ImageEto image) {
-
-    this.image = image;
   }
 
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.devonfw.application.mtsj.ordermanagement.common.api.to.OrderEto;
-import com.devonfw.application.mtsj.usermanagement.common.api.to.UserEto;
 import com.devonfw.module.basic.common.api.to.AbstractCto;
 
 /**
@@ -26,7 +25,7 @@ public class BookingCto extends AbstractCto {
 
   private List<OrderEto> orders;
 
-  private UserEto user;
+  // private UserEto user;
 
   public BookingEto getBooking() {
 
@@ -76,16 +75,6 @@ public class BookingCto extends AbstractCto {
   public void setOrders(List<OrderEto> orders) {
 
     this.orders = orders;
-  }
-
-  public UserEto getUser() {
-
-    return this.user;
-  }
-
-  public void setUser(UserEto user) {
-
-    this.user = user;
   }
 
 }
