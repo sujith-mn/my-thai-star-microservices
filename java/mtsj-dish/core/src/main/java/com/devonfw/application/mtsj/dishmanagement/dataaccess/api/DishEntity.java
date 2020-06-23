@@ -36,6 +36,23 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
   private List<CategoryEntity> categories;
 
   /**
+   * @return idImage
+   */
+  @Override
+  public Long getIdImage() {
+	return idImage;
+  }
+	
+  /**
+   * @param idImage new value of {@link #getIdImage}.
+   */
+  @Override
+  public void setIdImage(Long idImage) {
+	this.idImage = idImage;
+  }
+
+
+  /**
    * @return name
    */
   @Override
@@ -127,17 +144,5 @@ public class DishEntity extends ApplicationPersistenceEntity implements Dish {
     this.categories = categories;
   }
 
-  @Override
-  @Transient
-  public Long getImageId() {
-
-    return this.idImage;
-  }
-
-  @Override
-  public void setImageId(Long imageId) {
-
-    this.idImage = imageId;
-  }
 
 }

@@ -1,7 +1,5 @@
 package com.devonfw.application.mtsj.dishmanagement.logic.impl;
 
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -35,6 +33,7 @@ import com.devonfw.application.mtsj.dishmanagement.dataaccess.api.repo.Ingredien
 import com.devonfw.application.mtsj.dishmanagement.logic.api.Dishmanagement;
 import com.devonfw.application.mtsj.general.logic.base.AbstractComponentFacade;
 import com.devonfw.application.mtsj.imagemanagement.common.api.to.ImageEto;
+import com.devonfw.application.mtsj.imagemanagement.logic.api.Imagemanagement;
 
 /**
  * Implementation of component interface of dishmanagement
@@ -53,7 +52,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
    */
   @Inject
   private CategoryRepository categoryDao;
-
   /**
    * @see #getDishDao()
    */
@@ -65,6 +63,9 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
    */
   @Inject
   private IngredientRepository ingredientDao;
+  
+  @Inject
+  private Imagemanagement imagemanagement;
 
   /**
    * The constructor.
@@ -127,7 +128,7 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
     DishEntity entity = getDishDao().find(id);
     DishCto cto = new DishCto();
     cto.setCategories(getBeanMapper().mapList(entity.getCategories(), CategoryEto.class));
-    ImageEto imageEto = new ImageEto();
+    ImageEto imageEto = imagemanagement.findImage(entity.getIdImage());
     cto.setImage(imageEto);
     cto.setDish(getBeanMapper().map(entity, DishEto.class));
     cto.setExtras(getBeanMapper().mapList(entity.getExtras(), IngredientEto.class));
@@ -144,16 +145,9 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
     for (DishEntity dish : searchResult.getContent()) {
       DishCto cto = new DishCto();
       cto.setDish(getBeanMapper().map(dish, DishEto.class));
-      ImageEto imageEto = new ImageEto();
+      
+      ImageEto imageEto = imagemanagement.findImage(dish.getIdImage());
       cto.setImage(imageEto);
-      try {
-        // Blob dishContent = dish.getImage().getContent();
-
-        Blob dishContent = getImgeContent();
-        cto.getImage()
-            .setContent(Base64.getEncoder().encodeToString(dishContent.getBytes(1L, (int) dishContent.length())));
-      } catch (SQLException e) {
-      }
       cto.setCategories(getBeanMapper().mapList(dish.getCategories(), CategoryEto.class));
       cto.setExtras(getBeanMapper().mapList(dish.getExtras(), IngredientEto.class));
       ctos.add(cto);
@@ -168,15 +162,6 @@ public class DishmanagementImpl extends AbstractComponentFacade implements Dishm
     }
     return pagListTo;
 
-  }
-
-  /**
-   * @return
-   */
-  private Blob getImgeContent() {
-
-    // TODO Auto-generated method stub
-    return null;
   }
 
   @Override
