@@ -18,8 +18,8 @@ public interface Dish extends ApplicationEntity {
 
   public void setPrice(BigDecimal price);
 
-  public Long getImageId();
+  public Long getIdImage();
 
-  public void setImageId(Long idImage);
+  public void setIdImage(Long idImage);
 
 }

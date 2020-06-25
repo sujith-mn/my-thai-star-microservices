@@ -1,5 +1,7 @@
 package com.devonfw.application.mtsj.imagemanagement.logic.impl;
 
+import java.sql.SQLException;
+import java.util.Base64;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -43,7 +45,16 @@ public class ImagemanagementImpl extends AbstractComponentFacade implements Imag
   public ImageEto findImage(Long id) {
 
     LOG.debug("Get Image with id {} from database.", id);
-    return getBeanMapper().map(getImageDao().find(id), ImageEto.class);
+    ImageEntity imageEntity = getImageDao().find(id);
+    ImageEto imageEto = getBeanMapper().map(imageEntity, ImageEto.class);
+    try {
+    	imageEto.setContent(Base64.getEncoder().encodeToString(imageEntity.getContent().getBytes(1L, (int) imageEntity.getContent().length())));
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+    
+    return imageEto;
   }
 
   @Override

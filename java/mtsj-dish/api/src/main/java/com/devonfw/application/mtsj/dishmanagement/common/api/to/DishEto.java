@@ -18,9 +18,9 @@ public class DishEto extends AbstractEto implements Dish {
 
   private BigDecimal price;
 
-  private Long imageId;
+  private Long idImage;
 
-  @Override
+@Override
   public String getName() {
 
     return this.name;
@@ -56,17 +56,14 @@ public class DishEto extends AbstractEto implements Dish {
     this.price = price;
   }
 
-  @Override
-  public Long getImageId() {
+  public Long getIdImage() {
+	return idImage;
+}
 
-    return this.imageId;
-  }
+public void setIdImage(Long idImage) {
+	this.idImage = idImage;
+}
 
-  @Override
-  public void setImageId(Long imageId) {
-
-    this.imageId = imageId;
-  }
 
   @Override
   public int hashCode() {
@@ -76,7 +73,7 @@ public class DishEto extends AbstractEto implements Dish {
     result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
     result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
     result = prime * result + ((this.price == null) ? 0 : this.price.hashCode());
-    result = prime * result + ((this.imageId == null) ? 0 : this.imageId.hashCode());
+    result = prime * result + ((this.idImage == null) ? 0 : this.idImage.hashCode());
 
     return result;
   }
@@ -116,11 +113,11 @@ public class DishEto extends AbstractEto implements Dish {
     } else if (!this.price.equals(other.price)) {
       return false;
     }
-    if (this.imageId == null) {
-      if (other.imageId != null) {
+    if (this.idImage == null) {
+      if (other.idImage != null) {
         return false;
       }
-    } else if (!this.imageId.equals(other.imageId)) {
+    } else if (!this.idImage.equals(other.idImage)) {
       return false;
     }
 
