@@ -5,7 +5,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Configuration;
 
-import com.devonfw.application.mtsj.SpringBootApp;
+import com.devonfw.application.mtsj.DishApp;
 
 /**
  * This auto configuration will be used by spring boot to enable traditional deployment to a servlet container. You may
@@ -18,6 +18,6 @@ public class ServletInitializer extends SpringBootServletInitializer {
   @Override
   protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 
-    return application.sources(SpringBootApp.class);
+    return application.sources(DishApp.class);
   }
 }

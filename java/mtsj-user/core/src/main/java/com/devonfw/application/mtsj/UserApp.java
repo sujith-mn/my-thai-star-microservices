@@ -15,7 +15,7 @@ import com.devonfw.module.jpa.dataaccess.impl.data.GenericRepositoryFactoryBean;
 @EntityScan(basePackages = { "com.devonfw.application.mtsj" }, basePackageClasses = { AdvancedRevisionEntity.class })
 @EnableJpaRepositories(repositoryFactoryBeanClass = GenericRepositoryFactoryBean.class)
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
-public class SpringBootApp {
+public class UserApp {
 
   /**
    * Entry point for spring-boot based app
@@ -26,10 +26,10 @@ public class SpringBootApp {
 
     if (Arrays.stream(args).anyMatch((String e) -> e.contains("--spring.batch.job.names"))) {
       // if executing batch job, explicitly exit jvm to report error code from batch
-      System.exit(SpringApplication.exit(SpringApplication.run(SpringBootApp.class, args)));
+      System.exit(SpringApplication.exit(SpringApplication.run(UserApp.class, args)));
     } else {
       // normal web application start
-      SpringApplication.run(SpringBootApp.class, args);
+      SpringApplication.run(UserApp.class, args);
     }
   }
 }
