@@ -48,7 +48,7 @@
                   "maximumWarning": "6kb"
                 }
               ]
-},
+            },
             "production": {
               "budgets": [
                 {
@@ -270,6 +270,7 @@
     }
   },
   "cli": {
-    "defaultCollection": "@ngrx/schematics"
+    "defaultCollection": "@ngrx/schematics",
+    "analytics": "6b8c4099-31aa-4df6-9f48-66c23aace7ee"
   }
 }

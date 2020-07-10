@@ -1,0 +1,8 @@
+FROM maven:3.6-jdk-11 As builder
+
+FROM adoptopenjdk/openjdk11:jre-11.0.4_11-alpine
+WORKDIR /app
+COPY --from=builder /app/mtsj-booking/server/target/mtsjbooking-bootified.war /app/
+HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl --fail http://localhost:8081/mythaistar/services/rest/dishmanagement/v1/category/0/ || exit 1 
+ENTRYPOINT ["java","-jar","/app/mtsjbooking-bootified.war"]
+EXPOSE 8082

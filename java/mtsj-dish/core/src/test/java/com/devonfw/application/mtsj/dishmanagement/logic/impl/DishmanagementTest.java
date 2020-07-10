@@ -12,7 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
-import com.devonfw.application.mtsj.DishApp;
+import com.devonfw.application.mtsj.SpringBootApp;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.CategoryEto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishCto;
 import com.devonfw.application.mtsj.dishmanagement.common.api.to.DishSearchCriteriaTo;
@@ -23,7 +23,7 @@ import com.devonfw.application.mtsj.general.common.ApplicationComponentTest;
  * Tests for {@link Dishmanagement} component.
  *
  */
-@SpringBootTest(classes = DishApp.class)
+@SpringBootTest(classes = SpringBootApp.class)
 public class DishmanagementTest extends ApplicationComponentTest {
 
   @Inject

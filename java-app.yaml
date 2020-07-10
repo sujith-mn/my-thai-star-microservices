@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: java
+  labels:
+    app: mts
+    tier: java
+spec:
+  ports:
+  - port: 8082
+    targetPort: 8082
+  selector:
+    app: mtsjbooking
+    tier: java
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java
+  labels:
+    app: mtsjbooking
+spec:
+  selector:
+    matchLabels:
+      app: mts
+      tier: java
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mts
+        tier: java
+    spec:
+      securityContext:
+        runAsUser: 1000
+      hostname: java
+      containers:
+      - name: java
+        image: my-thai-star/mtsj-booking:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8082
+        resources: 
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits: 
+            memory: "512Mi"
+            cpu: "500m"

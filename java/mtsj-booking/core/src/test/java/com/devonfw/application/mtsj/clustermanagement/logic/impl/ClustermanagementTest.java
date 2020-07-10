@@ -23,7 +23,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener;
 import org.springframework.test.context.TestExecutionListeners;
 
-import com.devonfw.application.mtsj.BookingApp;
+import com.devonfw.application.mtsj.SpringBootApp;
 import com.devonfw.application.mtsj.clustermanagement.common.api.ClusterData;
 import com.devonfw.application.mtsj.clustermanagement.common.api.to.ClusterCriteriaEto;
 import com.devonfw.application.mtsj.clustermanagement.common.api.to.ClusterDataEto;
@@ -41,7 +41,7 @@ import com.devonfw.module.test.common.base.ComponentTest;
 @TestExecutionListeners(listeners = { WithSecurityContextTestExecutionListener.class,
 ReactorContextTestExecutionListener.class })
 
-@SpringBootTest(classes = BookingApp.class)
+@SpringBootTest(classes = SpringBootApp.class)
 // @RunWith(MockitoJUnitRunner.class)
 @ExtendWith(MockitoExtension.class)
 public class ClustermanagementTest extends ComponentTest {

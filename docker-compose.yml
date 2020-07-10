@@ -1,29 +1,63 @@
 version: '3'
 
 services:
-  reverse-proxy:
-    build: 'reverse-proxy/'
-    restart: always
-    container_name: 'mts_reverse_proxy'
-    image: my-thai-star/reverse-proxy:latest
-    networks:
-      - my-thai-star
-    ports:
-      - '8081:80'
-  angular:
-    build: 'angular/'
-    restart: always
-    container_name: 'mts_angular'
-    image: my-thai-star/angular:latest
-    networks:
-      - my-thai-star
-  java:
+  
+  build:
     build: 'java/'
     restart: always
-    container_name: 'mts_java'
-    image: my-thai-star/java:latest
+    container_name: 'mts_build'
+    image: build
     networks:
       - my-thai-star
+      
+  mtsj-booking:
+    build: 'java/mtsj-booking/'
+    restart: always
+    container_name: 'mts_booking'
+    image: mtsj-booking/java:latest
+    networks:
+      - my-thai-star 
+      
+  mtsj-dish:
+    build: 'java/mtsj-dish/'
+    restart: always
+    container_name: 'mts_dish'
+    image: mtsj-dish/java:latest
+    networks:
+      - my-thai-star  
+      
+  mtsj-gateway:
+    build: 'java/mtsj-gateway/'
+    restart: always
+    container_name: 'mts_gateway'
+    image: mtsj-gateway/java:latest
+    networks:
+      - my-thai-star 
+
+  mtsj-image:
+    build: 'java/mtsj-image/'
+    restart: always
+    container_name: 'mts_image'
+    image: mtsj-image/java:latest
+    networks:
+      - my-thai-star 
+      
+  mtsj-order:
+    build: 'java/mtsj-order/'
+    restart: always
+    container_name: 'mts_order'
+    image: mtsj-order/java:latest
+    networks:
+      - my-thai-star 
+      
+  mtsj-user:
+    build: 'java/mtsj-user/'
+    restart: always
+    container_name: 'mts_user'
+    image: mtsj-user/java:latest
+    networks:
+      - my-thai-star 
+      
 networks:
   my-thai-star:
     driver: bridge

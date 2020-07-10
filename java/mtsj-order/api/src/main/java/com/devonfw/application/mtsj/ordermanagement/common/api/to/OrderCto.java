@@ -2,6 +2,7 @@ package com.devonfw.application.mtsj.ordermanagement.common.api.to;
 
 import java.util.List;
 
+import com.devonfw.application.mtsj.bookingmanagement.common.api.to.BookingEto;
 import com.devonfw.module.basic.common.api.to.AbstractCto;
 
 /**
@@ -14,6 +15,24 @@ public class OrderCto extends AbstractCto {
   private OrderEto order;
 
   private List<OrderLineCto> orderLines;
+
+  private BookingEto booking;
+
+  /**
+   * @return booking
+   */
+  public BookingEto getBooking() {
+
+    return this.booking;
+  }
+
+  /**
+   * @param booking new value of {@link #getbooking}.
+   */
+  public void setBooking(BookingEto booking) {
+
+    this.booking = booking;
+  }
 
   public OrderEto getOrder() {
 

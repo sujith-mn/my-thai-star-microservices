@@ -21,7 +21,7 @@
     <mts.database.version>1.4.194</mts.database.version>
   </properties>
 
-  <dependencies>
+    <dependencies>
 
 	<dependency>
         <groupId>org.springframework.cloud</groupId>
